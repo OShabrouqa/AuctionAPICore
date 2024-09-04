@@ -6,7 +6,21 @@ namespace AuctionAPI.Models
     {
         public interface IAuctionService
         {
-            Task<List<Property>> GetAllPropertiesAsync();
+            Task<List<Property>> GetAllPropertiesAsync(
+                 string? name = null,
+                 string? description = null,
+                 decimal? startingPrice = null,
+                 DateTime? auctionEndTime = null,
+                 string? sortBy = null,
+                 string? sortDirection = "asc");
+
+            Task<List<Bidder>> GetAllBidsAsync(
+string? name = null,
+decimal? bidAmount = null,
+DateTime? bidTime = null,
+string? sortBy = null,
+string? sortDirection = "asc");
+
             Task<Property> GetPropertyByIdAsync(int propertyId);
             Task PlaceBidAsync(int propertyId, Bidder bidder);
         }
@@ -22,9 +36,25 @@ namespace AuctionAPI.Models
                 _bidderRepository = bidderRepository;
             }
 
-            public async Task<List<Property>> GetAllPropertiesAsync()
+            public async Task<List<Property>> GetAllPropertiesAsync(
+         string? name = null,
+         string? description = null,
+         decimal? startingPrice = null,
+         DateTime? auctionEndTime = null,
+         string? sortBy = null,
+         string? sortDirection = "asc")
             {
-                return await _propertyRepository.GetAllPropertiesAsync();
+                return await _propertyRepository.GetAllPropertiesAsync(name, description, startingPrice, auctionEndTime, sortBy, sortDirection);
+            }
+
+            public async Task<List<Bidder>> GetAllBidsAsync(
+string? name = null,
+decimal? bidAmount = null,
+DateTime? bidTime = null,
+string? sortBy = null,
+string? sortDirection = "asc")
+            {
+                return await _bidderRepository.GetAllBidsAsync(name, bidAmount, bidTime, sortBy, sortDirection);
             }
 
             public async Task<Property> GetPropertyByIdAsync(int propertyId)
