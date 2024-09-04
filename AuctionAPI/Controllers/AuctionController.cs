@@ -1,4 +1,5 @@
 ﻿using AuctionAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static AuctionAPI.Models.AuctionServices;
 
@@ -8,6 +9,8 @@ namespace AuctionAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Apply this attribute to require authentication for all actions
+
     public class AuctionController : ControllerBase
     {
         private readonly IAuctionService _auctionService;
